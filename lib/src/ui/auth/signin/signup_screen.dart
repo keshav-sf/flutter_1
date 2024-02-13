@@ -51,10 +51,10 @@ class _SignupScreenState extends State<SignupScreen> {
           name: _fullNameController.text.trim(),
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
-          tradeName: _tradeNameController.text.trim(),
-          commercialRegistration: _crController.text.trim(),
+          tradename: _tradeNameController.text.trim(),
+          commercialregistration: int.parse(_crController.text.trim()),
           address: _cityController.text.trim(),
-          vatNumber: _vatController.text.trim(),
+          vatnumber: _vatController.text.trim(),
         ),
       );
     }

@@ -35,18 +35,18 @@ class User {
   String? address;
   @JsonKey(name: "trade_name")
   String? tradeName;
-  @JsonKey(name: "commercial_Registration")
-  int? commercialRegistration;
-  @JsonKey(name: "vat_Number")
-  String? vatNumber;
-  @JsonKey(name: "image_Url")
-  String? imageUrl;
-  @JsonKey(name: "is_Active")
-  bool? isActive;
-  @JsonKey(name: "created_At")
-  String? createdAt;
-  @JsonKey(name: "updated_At")
-  String? updatedAt;
+  @JsonKey(name: "commercial_registration")
+  int? commercialregistration;
+  @JsonKey(name: "vat_number")
+  String? vatnumber;
+  @JsonKey(name: "image_url")
+  String? imageurl;
+  @JsonKey(name: "is_active")
+  bool? isactive;
+  @JsonKey(name: "created_at")
+  String? createdat;
+  @JsonKey(name: "updated_at")
+  String? updatedat;
 
   User({
     this.id,
@@ -54,12 +54,12 @@ class User {
     this.email,
     this.address,
     this.tradeName,
-    this.commercialRegistration,
-    this.vatNumber,
-    this.imageUrl,
-    this.isActive,
-    this.createdAt,
-    this.updatedAt,
+    this.commercialregistration,
+    this.vatnumber,
+    this.imageurl,
+    this.isactive,
+    this.createdat,
+    this.updatedat,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

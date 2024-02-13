@@ -8,18 +8,21 @@ class ReqSignupModel {
   String? address;
   String? email;
   String? password;
-  String? tradeName;
-  String? commercialRegistration;
-  String? vatNumber;
+  @JsonKey(name: "trade_name")
+  String? tradename;
+  @JsonKey(name: "commercial_registration")
+  int? commercialregistration;
+  @JsonKey(name: "vat_number")
+  String? vatnumber;
 
   ReqSignupModel(
       {this.name,
       this.address,
       this.email,
       this.password,
-      this.tradeName,
-      this.commercialRegistration,
-      this.vatNumber});
+      this.tradename,
+      this.commercialregistration,
+      this.vatnumber});
 
   factory ReqSignupModel.fromJson(Map<String, dynamic> json) =>
       _$ReqSignupModelFromJson(json);
