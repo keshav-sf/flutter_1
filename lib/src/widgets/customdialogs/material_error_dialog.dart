@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/base/dependencyinjection/locator.dart';
 import 'package:flutter_boilerplate/src/base/utils/localization/localization.dart';
 import 'package:flutter_boilerplate/src/base/utils/navigation_utils.dart';
+import 'package:flutter_boilerplate/src/base/utils/progress_dialog_utils.dart';
 
 class MaterialErrorDialog extends StatelessWidget {
   final String message;
@@ -33,6 +34,8 @@ class MaterialErrorDialog extends StatelessWidget {
       child: Text(okTitle ?? Localization.of().ok),
       onPressed: () {
         locator<NavigationUtils>().pop();
+        ProgressDialogUtils.dismissProgressDialog();
+
         if (okFunction != null) {
           okFunction!();
         }
@@ -45,6 +48,7 @@ class MaterialErrorDialog extends StatelessWidget {
       child: Text(Localization.of().cancel),
       onPressed: () {
         locator<NavigationUtils>().pop();
+        ProgressDialogUtils.dismissProgressDialog();
       },
     );
   }

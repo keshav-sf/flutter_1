@@ -33,11 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
       await locator<AuthController>().loginApiCall(
-          context: context,
-          model: ReqLoginModel(
-            username: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          ));
+        context: context,
+        model: ReqLoginModel(
+          username: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ),
+      );
     }
   }
 

@@ -24,10 +24,11 @@ void showAlertDialog({
             isCancelEnable: isCancelEnable);
       } else {
         return MaterialErrorDialog(
-            message: message,
-            okTitle: okButtonTitle,
-            okFunction: okButtonAction,
-            isCancelEnable: isCancelEnable);
+          message: message,
+          okTitle: okButtonTitle,
+          okFunction: okButtonAction,
+          // isCancelEnable: isCancelEnable
+        );
       }
     },
   );

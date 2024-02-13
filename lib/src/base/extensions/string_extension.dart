@@ -15,6 +15,14 @@ extension StringExtension on String {
     return RegExp(validStringRegex).hasMatch(value);
   }
 
+  bool _alphaStringValidation(String value) {
+    return RegExp(validAlphaNumericStringRegix).hasMatch(value);
+  }
+
+  bool _alphaNumberValidation(String value) {
+    return RegExp(validNumericRegix).hasMatch(value);
+  }
+
   // Check String Validation
   String? isValidFullName() {
     if (trim().isEmpty) {
@@ -92,7 +100,7 @@ extension StringExtension on String {
   String? isValidCR() {
     if (trim().isEmpty) {
       return Localization.of().msgCREmpty;
-    } else if (!_stringValidation(trim())) {
+    } else if (!_alphaNumberValidation(trim())) {
       return Localization.of().msgCRInvalid;
     } else {
       return null;
@@ -114,7 +122,7 @@ extension StringExtension on String {
   String? isValidVAT() {
     if (trim().isEmpty) {
       return Localization.of().msgVATEmpty;
-    } else if (!_stringValidation(trim())) {
+    } else if (!_alphaStringValidation(trim())) {
       return Localization.of().msgVATInvalid;
     } else {
       return null;

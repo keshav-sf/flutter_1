@@ -1,5 +1,7 @@
 import 'package:flutter_boilerplate/src/models/auth/req_login_model.dart';
+import 'package:flutter_boilerplate/src/models/auth/req_signup_model.dart';
 import 'package:flutter_boilerplate/src/models/auth/res_login_model.dart';
+import 'package:flutter_boilerplate/src/models/auth/res_signup_model.dart';
 
 import '../../base/dependencyinjection/locator.dart';
 
@@ -13,5 +15,13 @@ class AuthApiManager {
       data: request.toJson(),
     );
     return ResLoginModel.fromJson(response?.data);
+  }
+
+  Future<ResSignupModel> signup(ReqSignupModel request) async {
+    final response = await locator<ApiService>().post(
+      apiSignup,
+      data: request.toJson(),
+    );
+    return ResSignupModel.fromJson(response?.data);
   }
 }

@@ -17,4 +17,8 @@ const String validPasswordRegex =
     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~%]).{8,32}$';
 const String validMobileRegex = r'(^(?:[+0]9)?[0-9]{10,12}$)';
 
-const String validStringRegex = r"^[a-zA-Z]+$";
+const String validStringRegex = r"^[a-zA-Z ]+$";
+
+const String validAlphaNumericStringRegix = r"^[A-Za-z0-9]+$";
+
+const String validNumericRegix = r"^[0-9]+$";

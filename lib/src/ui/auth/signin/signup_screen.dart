@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/src/base/dependencyinjection/locator.dart';
 import 'package:flutter_boilerplate/src/base/extensions/string_extension.dart';
 import 'package:flutter_boilerplate/src/base/utils/constants/color_constant.dart';
 import 'package:flutter_boilerplate/src/base/utils/constants/fontsize_constant.dart';
 // import 'package:flutter_boilerplate/src/base/utils/constants/fontsize_constant.dart';
 import 'package:flutter_boilerplate/src/base/utils/localization/localization.dart';
+import 'package:flutter_boilerplate/src/controllers/auth/auth_controller.dart';
+import 'package:flutter_boilerplate/src/models/auth/req_signup_model.dart';
 
 import 'package:flutter_boilerplate/src/widgets/primary_text_field.dart';
 import 'package:flutter_boilerplate/src/widgets/single_text_widget.dart';
@@ -39,10 +42,21 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   String _oldpassword = "";
 
-  void _onSubmit() {
+  void _onSubmit() async {
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
-      // locator<AuthController>().loginApiCall(context: context);
+      await locator<AuthController>().signupApiCall(
+        context: context,
+        model: ReqSignupModel(
+          name: _fullNameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          tradeName: _tradeNameController.text.trim(),
+          commercialRegistration: _crController.text.trim(),
+          address: _cityController.text.trim(),
+          vatNumber: _vatController.text.trim(),
+        ),
+      );
     }
   }
 
