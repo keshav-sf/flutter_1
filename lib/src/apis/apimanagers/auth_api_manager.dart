@@ -1,15 +1,17 @@
+import 'package:flutter_boilerplate/src/models/auth/req_login_model.dart';
+import 'package:flutter_boilerplate/src/models/auth/res_login_model.dart';
+
 import '../../base/dependencyinjection/locator.dart';
 
 import '../api_route_constant.dart';
 import '../api_service.dart';
-import '../../models/res_base_model.dart';
 
 class AuthApiManager {
-  Future<ResBaseModel> login(ResBaseModel request) async {
+  Future<ResLoginModel> login(ReqLoginModel request) async {
     final response = await locator<ApiService>().post(
       apiLogin,
       data: request.toJson(),
     );
-    return ResBaseModel.fromJson(response?.data);
+    return ResLoginModel.fromJson(response?.data);
   }
 }

@@ -9,7 +9,9 @@ class PrimaryTextField extends StatefulWidget {
   final FocusNode focusNode;
   final TextInputType type;
   final String? trailingIcon;
+  final IconData? leadingIcon;
   final int? maxLength;
+  final bool underlineBorder;
   final bool enabled;
   final bool isObscureText;
   final TextInputAction textInputAction;
@@ -29,11 +31,13 @@ class PrimaryTextField extends StatefulWidget {
       required this.focusNode,
       required this.type,
       this.trailingIcon,
+      this.leadingIcon,
       this.isObscureText = false,
       required this.textInputAction,
       this.enabled = true,
       this.onSaved,
       this.maxLength,
+      this.underlineBorder = true,
       this.validateFunction,
       this.endIconClick,
       this.onFieldSubmitted,
@@ -66,22 +70,19 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
           fontSize: fontSize16,
           fontWeight: fontWeightRegular),
       decoration: InputDecoration(
+        enabledBorder: _underlineBorderCheck(Colors.black),
         labelText: widget.hint,
         counter: const Offstage(),
-        contentPadding: const EdgeInsets.all(0.0),
+        contentPadding: const EdgeInsets.all(10.0),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         errorStyle: const TextStyle(color: Colors.red),
-        errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-        ),
+        errorBorder: _underlineBorderCheck(Colors.red),
         errorMaxLines: 3,
-        labelStyle: const TextStyle(fontSize: fontSize14, color: Colors.grey),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: primaryColor, width: 1),
-        ),
-        focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 1),
-        ),
+        labelStyle: const TextStyle(fontSize: fontSize14, color: Colors.black),
+        focusedBorder: _underlineBorderCheck(primaryColor),
+        focusedErrorBorder: _underlineBorderCheck(Colors.red),
+        // prefixIconColor: ,
+        prefixIcon: widget.leadingIcon != null ? _prefixIconCheck() : null,
         suffixIcon: widget.isObscureText ? _passwordIcon() : _suffixIconCheck(),
       ),
       maxLines: widget.maxLines,
@@ -94,6 +95,18 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
       onChanged: widget.onChanged,
     );
   }
+
+  _underlineBorderCheck(Color color) => !widget.underlineBorder
+      ? OutlineInputBorder(
+          borderSide: BorderSide(color: color), borderRadius: BorderRadius.zero)
+      : UnderlineInputBorder(
+          borderSide: BorderSide(color: color, width: 1),
+        );
+
+  _prefixIconCheck() => Icon(
+        widget.leadingIcon,
+        color: primaryColor,
+      );
 
   _suffixIconCheck() => widget.trailingIcon != null
       ? GestureDetector(
@@ -124,7 +137,7 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
           height: 15,
           width: 15,
           child: Icon(_obscureText ? Icons.visibility_off : Icons.visibility,
-              color: primaryTextColor),
+              color: Colors.grey),
         ),
       );
 }

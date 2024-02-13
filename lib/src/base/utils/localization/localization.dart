@@ -68,11 +68,37 @@ abstract class Localization {
   String get search;
 
   // Auth Stringd
+
+  //Full Name
+  String get fullname;
+  String get msgFullNameEmpty;
+  String get msgFullNameInvalid;
+  //Email
   String get email;
-  String get password;
   String get msgEmailEmpty;
   String get msgEmailInvalid;
+  //Password
+  String get password;
   String get msgPasswordEmpty;
   String get msgPasswordError;
+  //Confirm Password
+  String get confirmPassword;
+  String get msgConfirmPasswordEmpty;
   String get msgPasswordNotMatch;
+  //Trade
+  String get tradeName;
+  String get msgTradeNameEmpty;
+  String get msgTradeNameInvalid;
+  //cr
+  String get cr;
+  String get msgCREmpty;
+  String get msgCRInvalid;
+  //city
+  String get city;
+  String get msgCityEmpty;
+  String get msgCityInvalid;
+  //vat
+  String get vat;
+  String get msgVATEmpty;
+  String get msgVATInvalid;
 }

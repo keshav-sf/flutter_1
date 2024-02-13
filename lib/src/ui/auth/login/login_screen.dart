@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/base/dependencyinjection/locator.dart';
+import 'package:flutter_boilerplate/src/base/extensions/context_extension.dart';
 import 'package:flutter_boilerplate/src/base/extensions/string_extension.dart';
+import 'package:flutter_boilerplate/src/base/utils/constants/color_constant.dart';
+import 'package:flutter_boilerplate/src/base/utils/constants/fontsize_constant.dart';
 import 'package:flutter_boilerplate/src/base/utils/localization/localization.dart';
 import 'package:flutter_boilerplate/src/controllers/auth/auth_controller.dart';
+import 'package:flutter_boilerplate/src/models/auth/req_login_model.dart';
+import 'package:flutter_boilerplate/src/ui/auth/forgotpassword/forgot_password.dart';
+import 'package:flutter_boilerplate/src/ui/auth/signin/signup_screen.dart';
+
 import 'package:flutter_boilerplate/src/widgets/primary_text_field.dart';
+import 'package:flutter_boilerplate/src/widgets/single_text_widget.dart';
 import '../../../base/extensions/scaffold_extension.dart';
+import '../../../widgets/primary_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,23 +29,77 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
+  void _onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+      await locator<AuthController>().loginApiCall(
+          context: context,
+          model: ReqLoginModel(
+            username: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          ));
+    }
+  }
+
+  void _onCreateAccount() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const SignupScreen(),
+    ));
+  }
+
+  void _onForgotPassword() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const ForgotPasswordScreen(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _getEmailTextField(),
-            const SizedBox(height: 8.0),
-            _getPasswordTextField(),
-            _getLoginButton()
-          ],
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 25),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: context.getHeight(0.86),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _getLoginTitle(),
+                    _addSpacing(50.0),
+                    _getEmailTextField(),
+                    _addSpacing(20.0),
+                    _getPasswordTextField(),
+                    _addSpacing(25.0),
+                    _getLoginButton(),
+                    _addSpacing(20.0),
+                    _getForgotPasswordText(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                child: _getCreateAccountText(),
+              ),
+            ],
+          ),
         ),
       ),
     ).authContainerScaffold(context: context);
+  }
+
+  Widget _getLoginTitle() {
+    return const SingleTextWidget(
+      text: "Login",
+      textWeight: fontWeightMedium,
+      textSize: fontSize26,
+    );
+  }
+
+  Widget _addSpacing(value) {
+    return SizedBox(height: value);
   }
 
   Widget _getEmailTextField() {
@@ -46,6 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
       type: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       controller: _emailController,
+      leadingIcon: Icons.email,
+      underlineBorder: false,
       onFieldSubmitted: (value) {
         _emailFocus.unfocus();
         _passwordFocus.requestFocus();
@@ -63,6 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
       type: TextInputType.visiblePassword,
       textInputAction: TextInputAction.done,
       controller: _passwordController,
+      isObscureText: true,
+      leadingIcon: Icons.lock,
+      underlineBorder: false,
       onFieldSubmitted: (value) {
         _passwordFocus.unfocus();
       },
@@ -73,14 +141,37 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _getLoginButton() {
-    return TextButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          FocusScope.of(context).unfocus();
-          locator<AuthController>().loginApiCall(context: context);
-        }
-      },
-      child: const Text("Login"),
+    return PrimaryButton(
+      buttonColor: primaryColor,
+      buttonText: "Login",
+      onButtonClick: _onSubmit,
+    );
+  }
+
+  Widget _getForgotPasswordText() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TextButton(
+            onPressed: _onForgotPassword, child: const Text("Forgot Password?"))
+      ],
+    );
+  }
+
+  Widget _getCreateAccountText() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SingleTextWidget(
+          text: "Don't have an Account?",
+          textWeight: fontWeightLight,
+          textColor: Colors.black,
+        ),
+        TextButton(
+          onPressed: _onCreateAccount,
+          child: const Text("Create an Account"),
+        )
+      ],
     );
   }
 }

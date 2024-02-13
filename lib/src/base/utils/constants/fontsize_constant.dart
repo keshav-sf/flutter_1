@@ -19,6 +19,7 @@ const double fontSize14 = 14.0;
 const double fontSize15 = 15.0;
 const double fontSize16 = 16.0;
 const double fontSize18 = 18.0;
+const double fontSize22 = 22.0; //added
 const double fontSize24 = 24.0;
 const double fontSize26 = 26.0;
 const double fontSize28 = 28.0;
