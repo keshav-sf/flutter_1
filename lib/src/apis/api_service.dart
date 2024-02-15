@@ -30,7 +30,7 @@ class ApiService {
         InterceptorsWrapper(
           onRequest: (options, handler) {
             options.headers.addAll({
-              'X-Auth-Token': getString(prefkeyToken),
+              'Authorization': "Bearer ${getString(prefkeyToken)}",
             });
             if (kDebugMode) {
               log(options.headers.toString(), name: "Headers");

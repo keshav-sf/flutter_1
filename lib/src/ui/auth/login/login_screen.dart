@@ -3,16 +3,18 @@ import 'package:flutter_boilerplate/src/base/dependencyinjection/locator.dart';
 import 'package:flutter_boilerplate/src/base/extensions/context_extension.dart';
 import 'package:flutter_boilerplate/src/base/extensions/string_extension.dart';
 import 'package:flutter_boilerplate/src/base/utils/constants/color_constant.dart';
-import 'package:flutter_boilerplate/src/base/utils/constants/fontsize_constant.dart';
+// import 'package:flutter_boilerplate/src/base/utils/c+onstants/fontsize_constant.dart';
 import 'package:flutter_boilerplate/src/base/utils/localization/localization.dart';
 import 'package:flutter_boilerplate/src/controllers/auth/auth_controller.dart';
 import 'package:flutter_boilerplate/src/models/auth/req_login_model.dart';
 import 'package:flutter_boilerplate/src/ui/auth/forgotpassword/forgot_password.dart';
 import 'package:flutter_boilerplate/src/ui/auth/signin/signup_screen.dart';
+import 'package:flutter_boilerplate/src/ui/user/home_screen.dart';
 
 import 'package:flutter_boilerplate/src/widgets/primary_text_field.dart';
 import 'package:flutter_boilerplate/src/widgets/single_text_widget.dart';
 import '../../../base/extensions/scaffold_extension.dart';
+import '../../../base/utils/constants/fontsize_constant.dart';
 import '../../../widgets/primary_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -37,6 +39,12 @@ class _LoginScreenState extends State<LoginScreen> {
         model: ReqLoginModel(
           username: _emailController.text.trim(),
           password: _passwordController.text.trim(),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
         ),
       );
     }

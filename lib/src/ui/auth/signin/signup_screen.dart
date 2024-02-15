@@ -7,6 +7,7 @@ import 'package:flutter_boilerplate/src/base/utils/constants/fontsize_constant.d
 import 'package:flutter_boilerplate/src/base/utils/localization/localization.dart';
 import 'package:flutter_boilerplate/src/controllers/auth/auth_controller.dart';
 import 'package:flutter_boilerplate/src/models/auth/req_signup_model.dart';
+import 'package:flutter_boilerplate/src/ui/user/home_screen.dart';
 
 import 'package:flutter_boilerplate/src/widgets/primary_text_field.dart';
 import 'package:flutter_boilerplate/src/widgets/single_text_widget.dart';
@@ -55,6 +56,12 @@ class _SignupScreenState extends State<SignupScreen> {
           commercialregistration: int.parse(_crController.text.trim()),
           address: _cityController.text.trim(),
           vatnumber: _vatController.text.trim(),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
         ),
       );
     }

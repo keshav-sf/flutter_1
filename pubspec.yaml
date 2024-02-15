@@ -27,6 +27,7 @@ dependencies:
   json_annotation: ^4.8.0 # For Json Conversion
   flutter_dotenv: ^5.0.2 # To Store variables in env file
   rxdart: ^0.27.7
+  syncfusion_flutter_charts: ^24.2.5
 
 dev_dependencies:
   flutter_test:
