@@ -9,6 +9,8 @@ import 'package:flutter_boilerplate/src/models/auth/req_signup_model.dart';
 import 'package:flutter_boilerplate/src/models/auth/res_dashboard_model.dart';
 import 'package:flutter_boilerplate/src/models/auth/res_login_model.dart';
 
+import '../../models/auth/res_signup_model.dart';
+
 class AuthController {
   // void loginApiCall({required BuildContext context}) async {
   //   final value = await locator<AuthApiManager>().login(ResBaseModel());
@@ -32,13 +34,19 @@ class AuthController {
 
   Future<void> setLoginDataCall(ResLoginModel data) async {
     await setString(prefkeyToken, data.data?.token ?? '');
+    await setString(prefkeyName, data.data?.user?.name ?? '');
+  }
+
+  Future<void> setSignupDataCall(ResSignupModel data) async {
+    await setString(prefkeyToken, data.data?.token ?? '');
+    await setString(prefkeyName, data.data?.user?.name ?? '');
   }
 
   Future<void> signupApiCall(
       {required BuildContext context, required ReqSignupModel model}) async {
     ProgressDialogUtils.showProgressDialog();
-    await locator<AuthApiManager>().signup(model);
+    final response = await locator<AuthApiManager>().signup(model);
     ProgressDialogUtils.dismissProgressDialog();
-    // await setLoginData(response);
+    await setSignupDataCall(response);
   }
 }

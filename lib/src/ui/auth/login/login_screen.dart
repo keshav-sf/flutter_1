@@ -3,7 +3,6 @@ import 'package:flutter_boilerplate/src/base/dependencyinjection/locator.dart';
 import 'package:flutter_boilerplate/src/base/extensions/context_extension.dart';
 import 'package:flutter_boilerplate/src/base/extensions/string_extension.dart';
 import 'package:flutter_boilerplate/src/base/utils/constants/color_constant.dart';
-// import 'package:flutter_boilerplate/src/base/utils/c+onstants/fontsize_constant.dart';
 import 'package:flutter_boilerplate/src/base/utils/localization/localization.dart';
 import 'package:flutter_boilerplate/src/controllers/auth/auth_controller.dart';
 import 'package:flutter_boilerplate/src/models/auth/req_login_model.dart';
@@ -41,12 +40,12 @@ class _LoginScreenState extends State<LoginScreen> {
           password: _passwordController.text.trim(),
         ),
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+          (route) => false);
     }
   }
 
@@ -66,35 +65,37 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 25),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                height: context.getHeight(0.86),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _getLoginTitle(),
-                    _addSpacing(50.0),
-                    _getEmailTextField(),
-                    _addSpacing(20.0),
-                    _getPasswordTextField(),
-                    _addSpacing(25.0),
-                    _getLoginButton(),
-                    _addSpacing(20.0),
-                    _getForgotPasswordText(),
-                  ],
+      child: ListView(
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: context.getHeight(0.86),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _getLoginTitle(),
+                      _addSpacing(50.0),
+                      _getEmailTextField(),
+                      _addSpacing(20.0),
+                      _getPasswordTextField(),
+                      _addSpacing(25.0),
+                      _getLoginButton(),
+                      _addSpacing(20.0),
+                      _getForgotPasswordText(),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                child: _getCreateAccountText(),
-              ),
-            ],
+                SizedBox(
+                  child: _getCreateAccountText(),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     ).authContainerScaffold(context: context);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/base/extensions/context_extension.dart';
+import 'package:flutter_boilerplate/src/base/extensions/scaffold_extension.dart';
 import 'package:flutter_boilerplate/src/base/utils/constants/color_constant.dart';
 import 'package:flutter_boilerplate/src/base/utils/constants/fontsize_constant.dart';
 import 'package:flutter_boilerplate/src/controllers/auth/auth_controller.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_boilerplate/src/widgets/single_text_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../base/dependencyinjection/locator.dart';
+import '../../base/utils/constants/preference_key_constant.dart';
+import '../../base/utils/preference_utils.dart';
 import '../../models/auth/res_dashboard_model.dart';
 
 class GDPData {
@@ -50,81 +53,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: primaryColor.withOpacity(0.05),
-        title: _addAppBarTitle(),
-        actions: [_addAppBarIcon()],
-      ),
-      body: ValueListenableBuilder(
-          valueListenable: _dashboard,
-          builder: (context, ResDashboardModel? dashboard, child) {
-            _chartData = getChartData(
-                paid: _dashboard.value!.data!.totalInvoices!.paid,
-                unpaid: _dashboard.value!.data!.totalInvoices!.unpaid);
+    return ValueListenableBuilder(
+            valueListenable: _dashboard,
+            builder: (context, ResDashboardModel? dashboard, child) {
+              _chartData = getChartData(
+                  paid: _dashboard.value!.data!.totalInvoices!.paid,
+                  unpaid: _dashboard.value!.data!.totalInvoices!.unpaid);
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _getTotalIncome(totalIncome: dashboard?.data?.totalIncome),
-                _getReportChart(
-                    total: dashboard?.data?.total,
-                    totalInvoice: dashboard?.data?.totalInvoices),
-                _addSpacing(value: 50.0),
-                _getSingleButton(
-                    buttonText: "New Invoice", buttonIcon: Icons.add),
-                _getSingleButton(
-                    buttonText: "Invoice List", buttonIcon: Icons.add),
-                _getDoubleButton(
-                  button1Text: "Expense Manage",
-                  button1Icon: Icons.currency_exchange_rounded,
-                  button2Text: "Items",
-                  button2Icon: Icons.label,
-                ),
-                _getDoubleButton(
-                  button1Text: "Reports",
-                  button1Icon: Icons.bar_chart,
-                  button2Text: "Client List",
-                  button2Icon: Icons.person,
-                )
-              ],
-            );
-          }),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: primaryColor,
-            ),
-            label: "●"),
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_2_outlined,
-              color: primaryColor,
-            ),
-            label: "")
-      ]),
-    );
-  }
-
-  Widget _addAppBarTitle() {
-    return const SingleTextWidget(
-      text: "Welcome",
-      textWeight: fontWeightMedium,
-      textSize: fontSize22,
-      textColor: primaryColor,
-    );
-  }
-
-  Widget _addAppBarIcon() {
-    return IconButton(
-      onPressed: () => Navigator.of(context).pop(),
-      icon: const Icon(
-        Icons.exit_to_app,
-        color: primaryColor,
-      ),
-    );
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _getTotalIncome(totalIncome: dashboard?.data?.totalIncome),
+                  _getReportChart(
+                      total: dashboard?.data?.total,
+                      totalInvoice: dashboard?.data?.totalInvoices),
+                  _addSpacing(value: 50.0),
+                  _getSingleButton(
+                      buttonText: "New Invoice", buttonIcon: Icons.add),
+                  _getSingleButton(
+                      buttonText: "Invoice List", buttonIcon: Icons.add),
+                  _getDoubleButton(
+                    button1Text: "Expense Manage",
+                    button1Icon: Icons.currency_exchange_rounded,
+                    button2Text: "Items",
+                    button2Icon: Icons.label,
+                  ),
+                  _getDoubleButton(
+                    button1Text: "Reports",
+                    button1Icon: Icons.bar_chart,
+                    button2Text: "Client List",
+                    button2Icon: Icons.person,
+                  )
+                ],
+              );
+            })
+        .dashboardContainerScaffold(
+            context: context,
+            title: getString(prefkeyName),
+            bottomNavigationIcon1: Icons.home,
+            bottomNavigationIcon2: Icons.person_2_outlined);
   }
 
   Widget _addSpacing({value = 10.0}) {
@@ -132,23 +99,33 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getTotalIncome({totalIncome = 0}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SingleTextWidget(
-            text: "Total Income",
-            textWeight: fontWeightRegular,
-            textSize: fontSize16,
-          ),
-          _addSpacing(),
-          SingleTextWidget(
-            text: "$totalIncome SR",
-            textWeight: fontWeightMedium,
-            textSize: fontSize32,
-          ),
-        ],
+    return Container(
+      width: context.getWidth(),
+      decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            offset: Offset(0, 7),
+            spreadRadius: 0,
+            blurRadius: 5,
+            color: Colors.black12),
+      ]),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SingleTextWidget(
+              text: "Total Income",
+              textWeight: fontWeightRegular,
+              textSize: fontSize16,
+            ),
+            _addSpacing(),
+            SingleTextWidget(
+              text: "$totalIncome SR",
+              textWeight: fontWeightMedium,
+              textSize: fontSize32,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -214,30 +191,34 @@ class _HomeScreenState extends State<HomeScreen> {
       color: primaryColor.withOpacity(0.05),
       child: Padding(
         padding: const EdgeInsets.all(30),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
           children: [
-            SizedBox(
-              width: context.getWidth(0.6),
-              child: Column(
-                children: [_getDonutChart(total: total)],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _getChartlabelData(
-                    color: primaryColor,
-                    text: "Paid",
-                    total: totalInvoice.paid),
-                _addSpacing(value: 30.0),
-                _getChartlabelData(
-                    color: Colors.grey,
-                    text: "Unpaid",
-                    total: totalInvoice.unpaid),
+                SizedBox(
+                  width: context.getWidth(0.6),
+                  child: Column(
+                    children: [_getDonutChart(total: total)],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _getChartlabelData(
+                        color: primaryColor,
+                        text: "Paid",
+                        total: totalInvoice.paid),
+                    _addSpacing(value: 30.0),
+                    _getChartlabelData(
+                        color: Colors.grey,
+                        text: "Unpaid",
+                        total: totalInvoice.unpaid),
+                  ],
+                )
               ],
-            )
+            ),
           ],
         ),
       ),

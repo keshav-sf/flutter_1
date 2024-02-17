@@ -58,12 +58,12 @@ class _SignupScreenState extends State<SignupScreen> {
           vatnumber: _vatController.text.trim(),
         ),
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+          (route) => false);
     }
   }
 

@@ -63,7 +63,7 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
       textInputAction: widget.textInputAction,
       maxLength: widget.maxLength,
       focusNode: widget.focusNode,
-      textCapitalization: TextCapitalization.sentences,
+      textCapitalization: TextCapitalization.none,
       enabled: widget.enabled,
       style: TextStyle(
           color: widget.enabled ? primaryTextColor : Colors.grey,

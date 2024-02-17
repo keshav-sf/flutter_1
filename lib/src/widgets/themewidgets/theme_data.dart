@@ -25,7 +25,7 @@ ThemeData lightThemeData() {
     brightness: Brightness.light,
     primaryColor: primaryColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    fontFamily: 'Poppins',
+    fontFamily: 'Arial',
   );
 }
 
@@ -51,6 +51,6 @@ ThemeData darkThemeData() {
     brightness: Brightness.dark,
     primaryColor: Colors.black,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    fontFamily: 'Poppins',
+    fontFamily: 'Arial',
   );
 }
